@@ -1,0 +1,14 @@
+* text=auto
+
+*.yml text
+*.yaml text
+*.md text
+*.py text
+*.ini text
+*.cfg text
+*.j2 text
+*.vault.yml text
+*.vault text
+
+Makefile linguist-language=Makefile
+*.j2 linguist-language=Jinja

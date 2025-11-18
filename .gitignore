@@ -1,2 +1,40 @@
+# Editor`s files and folders
 /.vscode
 /.github
+/.idea
+/.cache
+*.swp
+*.swo
+
+# Logs and databases
+*.log
+logs/*
+
+# Vault password file
+.vault_pass.txt
+credentials.yml
+*.vault
+*.vault.yml
+
+# OS generated files #
+.DS_Store
+.DS_Store?
+Thumbs.db
+
+# Environments
+.env
+.venv
+.venv/
+env/
+venv/
+__pycache__/
+
+# Molecule
+*.retry
+*.log
+test-reports/
+.molecule/
+
+# Makefile
+*.out
+*.tmp
