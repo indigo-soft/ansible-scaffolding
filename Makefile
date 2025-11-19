@@ -3,6 +3,7 @@ vault_password_file := .vault
 
 # Prefer system bash for running recipes and scripts
 SHELL := $(shell which bash 2>/dev/null || echo /bin/bash)
+.SILENT:
 
 .PHONY: init run lint check dry-run vault decrypt vault-edit doc-md \
 	molecule-test molecule-verify molecule-coverage molecule-create \
@@ -11,7 +12,7 @@ SHELL := $(shell which bash 2>/dev/null || echo /bin/bash)
 
 ## 📦 Initializes the Ansible project structure in the current directory
 init:
-	@$(SHELL) scripts/init.sh
+	@$(SHELL) scripts/init.sh $(vault_password_file)
 
 ## 🚀 Runs the site.yml playbook
 run:
@@ -33,13 +34,23 @@ lint:
 
 ## 🛜 Pings all hosts
 check:
-	ansible -i inventory all -m ping
+	@PY=$$(command -v python3 2>/dev/null || command -v python 2>/dev/null || true) ; \
+	if [ -n "$$PY" ]; then \
+		ansible -i inventory all -m ping -e "ansible_python_interpreter=$$PY" ; \
+	else \
+		ansible -i inventory all -m ping ; \
+	fi
 
 ## 🔐 Encrypts variables using Vault
 vault:
 	@test -f $(vault_password_file) || head -c 32 /dev/urandom | base64 > $(vault_password_file)
 	@chmod 600 $(vault_password_file)
-	ansible-vault encrypt group_vars/all.yml --vault-password-file $(vault_password_file)
+	ansible-vault encrypt group_vars/all.yml --vault-password-file $(vault_password_file)  --encrypt-vault-id default > /dev/null
+
+
+## 🔐 Encrypt role files and related group_vars
+encrypt:
+	@$(SHELL) scripts/encrypt-role.sh $(role_name) $(vault_password_file)
 
 ## 🔓 Decrypts Vault variables
 decrypt:
@@ -47,7 +58,7 @@ decrypt:
 
 ## ✏️ Edits Vault variables
 vault-edit:
-	ansible-vault edit group_vars/all.yml --vault-password-file $(vault_password_file)
+	@bash -c 'EDITOR="$${VISUAL:-$${EDITOR:-$$(command -v nano 2>/dev/null || command -v vi 2>/dev/null || echo vi)}}" ; export EDITOR ; ansible-vault edit group_vars/all.yml --vault-password-file $(vault_password_file)'
 
 ## 📘 Generates README.md with project structure and usage
 doc-md:
@@ -65,7 +76,7 @@ molecule-list: molecule list
 
 ## 🛠️ Scaffolds a new role with Molecule, README, specs, and example vars
 role:
-	@$(SHELL) scripts/role.sh $(role_name)
+	@$(SHELL) scripts/role.sh $(role_name) $(vault_password_file)
 
 ## 📋 Preview what `destroy` would remove (no deletion)
 destroy-preview:

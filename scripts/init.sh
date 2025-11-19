@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# default vault password file used by ansible.cfg
-vault_password_file='.vault'
+vault_password_file="${1:-.vault}"
 
 # create_dirs: ensure basic Ansible project directories exist
 create_dirs() {
@@ -48,8 +47,8 @@ create_group_vars() {
 # run_optional_make: call Makefile targets if Makefile exists
 run_optional_make() {
   if [ -f Makefile ]; then
-    make vault || true
-    make set-python || true
+    make --no-print-directory vault || true
+    make --no-print-directory set-python || true
   fi
 }
 

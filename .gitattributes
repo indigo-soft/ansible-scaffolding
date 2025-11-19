@@ -9,6 +9,7 @@
 *.j2 text
 *.vault.yml text
 *.vault text
+.vault
 
 Makefile linguist-language=Makefile
 *.j2 linguist-language=Jinja

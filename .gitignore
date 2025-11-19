@@ -13,6 +13,7 @@ logs/*
 # Vault password file
 .vault_pass.txt
 credentials.yml
+.vault
 *.vault
 *.vault.yml
 

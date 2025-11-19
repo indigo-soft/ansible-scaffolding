@@ -59,6 +59,33 @@ install_group_vars() {
     fi
 }
 
+# encrypt_role_files: find YAML files in the role and group_vars and encrypt them with ansible-vault
+encrypt_role_files() {
+    vault_file="${2:-.vault}"
+    # create vault file if missing
+    if [ ! -f "$vault_file" ]; then
+        head -c 32 /dev/urandom | base64 > "$vault_file"
+        chmod 600 "$vault_file"
+    fi
+
+    # collect YAML files to encrypt
+    mapfile -d '' -t enc_targets < <(find "$dest_root" group_vars -type f \( -name "*.yml" -o -name "*.yaml" \) -print0 2>/dev/null || true)
+    if [ ${#enc_targets[@]} -eq 0 ]; then
+        return 0
+    fi
+
+    printf "Encrypting %d file(s) with ansible-vault...\n" "${#enc_targets[@]}"
+    for f in "${enc_targets[@]}"; do
+        # skip if already encrypted
+        if head -n1 "$f" 2>/dev/null | grep -q "ANSIBLE_VAULT"; then
+            printf "- Skipping already-encrypted: %s\n" "${f#./}"
+            continue
+        fi
+        ansible-vault encrypt "$f" --vault-password-file "$vault_file" --encrypt-vault-id default
+        printf "- Encrypted: %s\n" "${f#./}"
+    done
+}
+
 # main: entrypoint that validates args and runs setup + copy
 main() {
     if [ -z "$role_name" ]; then
@@ -66,12 +93,17 @@ main() {
         die "Role name required"
     fi
 
+    vault_file="${2:-.vault}"
+
     validate_role_name
     setup_paths
     copy_templates
     install_group_vars
 
-    printf "✅ Role %s scaffolded\n" "$role_name"
+    # encrypt role-related YAML files (defaults, vars, group_vars)
+    encrypt_role_files "$role_name" "$vault_file"
+
+    printf "✅ Role %s scaffolded and encrypted\n" "$role_name"
 }
 
 main "$@"
