@@ -1,0 +1,16 @@
+argument_specs:
+  main:
+    short_description: "Role __ROLE__ configuration"
+    options:
+      myrole_enabled:
+        type: bool
+        default: true
+        description: "Enable the role"
+      myrole_port:
+        type: int
+        default: 8080
+        description: "Service port"
+      myrole_config_path:
+        type: str
+        default: "/etc/__ROLE__/config.yml"
+        description: "Path to config file"

@@ -1,0 +1,4 @@
+- name: Apply role
+  hosts: all
+  roles:
+    - __ROLE__

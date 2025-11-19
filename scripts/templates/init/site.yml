@@ -1,0 +1,4 @@
+- name: Site playbook
+  hosts: all
+  gather_facts: false
+  tasks: []

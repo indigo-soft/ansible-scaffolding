@@ -1,0 +1,3 @@
+- `ansible-lint`:
+  - Install with `pip3 install --user ansible-lint` or `pipx install ansible-lint`.
+  - If installed with `--user`, ensure `~/.local/bin` is in your `PATH`.
