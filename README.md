@@ -1,73 +1,49 @@
-# 🧰 Ansible Scaffolding
+# 🧰 **Ansible Scaffolding**
 
-Minimalist Ansible project template with ergonomic Makefile automation. Includes role generator (`make role [rolename]`), Molecule integration, Vault support, and auto-generated README. Designed for clarity, repeatability, and smooth onboarding.
+Minimalistic Ansible project scaffold with ergonomic Makefile automation.
+Includes role generator, Molecule integration, Vault support, and auto-generated README.
+Designed for clarity, reproducibility, and contributor onboarding.
 
-## 📦 Project Structure
+---
 
-- `Makefile` — main automation interface
-- Roles live in `roles/`, created via `make role [rolename]`
+## ⚙️ Installation
 
-## 🚀 Makefile Commands
-
-**🔧 Initialization**
 ```bash
+git clone https://github.com/indigo-soft/ansible-scaffolding.git
+cd ansible-scaffolding
 make init
 ```
 
-## ▶️ Execution
-```bash
-make run
-make dry-run
-make check
-```
+## 🛠️ Makefile Commands
+make init                     # Create files and folders
+make role [role-name]         # Generate a new role [role-name]
+make encrypt                  # Encrypt file using Vault with default vault-id
+make decrypt                  # Decrypt file using Vault with default vault-id
+make doc-md                   # Generate README.md from template
+make molecule-test            # Run Molecule tests for all roles
 
-## 🧪 Testing
-```bash
-make lint
-make molecule-test
-make molecule-verify
-make molecule-idempotence
-```
+## 🔐 Vault Integration
+- Vault password stored in .vault (ignored by Git)
 
-## 🔐 Vault
-```bash
-make vault
-make decrypt
-make vault-edit
-```
+## 🧪 Molecule Testing
+- Run make molecule-test to test all roles
+- Molecule scenarios stored in molecule/
+- Supports local testing and CI integration
 
-## 🏗️ Role Generation
-```bash
-make role [rolename]
-```
+## 📄 Auto-Documentation
+- make doc-md generates README.md from template
+- Template stored in docs/README.template.md
+- Ensures consistent documentation across roles
 
-## 📄 Documentation
-```bash
-make doc-md
-```
+## 🧼 Standards & Hygiene
+- .gitignore excludes .venv/, .molecule/, *.retry, *.vault, etc.
+- .gitattributes normalizes line endings and sets linguist language hints
+- YAML linting and Ansible linting recommended via pre-commit (optional)
 
-## 🧪 Molecule Commands
-```bash
-make molecule-create
-make molecule-converge
-make molecule-destroy
-make molecule-list
-```
+## 🧠 Philosophy
+- Minimalism: No unnecessary complexity
+- Reproducibility: All steps automated via Makefile
+- Onboarding: New contributors can start with make role NAME=...
 
-## 🛠️ Requirements
-- Ubuntu Server LTS (recommended)
-- Ansible ≥ 2.14
-- Molecule + Testinfra
-- Collections: ansible.posix, community.general
-
-
-## 🧬 Philosophy
-- Minimal boilerplate, maximum automation
-- Ergonomic, grouped command naming
-- Auto-generated README
-- Roles include examples (main.example.yml, config.example.j2)
-- No vars/ — only defaults/ and tasks/
-
-
-## 📚 License
-MIT — free to use, modify, and distribute with attribution.
+## 📜 License
+MIT — free to use, modify, and distribute.
