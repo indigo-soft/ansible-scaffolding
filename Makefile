@@ -65,14 +65,14 @@ doc-md:
 	@$(SHELL) scripts/doc-md.sh
 
 ## 🧪 Molecule commands
-molecule-test: molecule test
-molecule-verify: molecule verify
-molecule-coverage: molecule verify && { test -f coverage.xml && echo "✅ Coverage generated"; } || echo "ℹ️ coverage.xml not found"
-molecule-create: molecule create
-molecule-converge: molecule converge
-molecule-destroy: molecule destroy
-molecule-idempotence: molecule idempotence
-molecule-list: molecule list
+molecule-test:
+	@$(SHELL) scripts/molecule-checks.sh all && molecule test
+
+molecule-create:
+	@$(SHELL) scripts/molecule-checks.sh create $(role_name)
+
+molecule-list:
+	@$(SHELL) scripts/molecule-checks.sh molecule && $(SHELL) scripts/molecule-checks.sh roles && test -f roles/$(role_name)/molecule/default/molecule.yml && cd roles/$(role_name) && molecule list || { echo "\033[31m[ERROR]: molecule.yml not found in roles/$(role_name)/molecule/default/.\033[0m"; exit 1; }
 
 ## 🛠️ Scaffolds a new role with Molecule, README, specs, and example vars
 role:

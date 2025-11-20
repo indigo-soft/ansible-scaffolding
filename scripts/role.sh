@@ -78,11 +78,11 @@ encrypt_role_files() {
     for f in "${enc_targets[@]}"; do
         # skip if already encrypted
         if head -n1 "$f" 2>/dev/null | grep -q "ANSIBLE_VAULT"; then
-            printf "- Skipping already-encrypted: %s\n" "${f#./}"
+            printf -- "- Skipping already-encrypted: %s\n" "${f#./}"
             continue
         fi
         ansible-vault encrypt "$f" --vault-password-file "$vault_file" --encrypt-vault-id default
-        printf "- Encrypted: %s\n" "${f#./}"
+        printf -- "- Encrypted: %s\n" "${f#./}"
     done
 }
 
