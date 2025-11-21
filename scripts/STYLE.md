@@ -9,6 +9,12 @@ Convention (required):
 - Use `find -print0` and `read -d ''` or `xargs -0` for null-safe file lists.
 - When doing placeholder substitution, prefer `sed "s|OLD|NEW|g"` to avoid `/` escaping issues.
 
+- Before committing or running scripts, validate them with `bash -n` and `shellcheck`:
+  - Quick syntax check: `bash -n scripts/example.sh`
+  - Static analysis with ShellCheck (install via your package manager):
+    `shellcheck scripts/*.sh`
+  - Consider adding a `make lint` target that runs both checks in CI.
+
 Example layout:
 
 ```bash
@@ -18,7 +24,7 @@ set -euo pipefail
 # print_error: print an error message and exit
 print_error() {
   printf "%s\n" "ERROR: $1" >&2
-  exit ${2:-1}
+  exit "${2:-1}"
 }
 
 # do_work: main worker that performs the task

@@ -8,8 +8,8 @@ check_prereqs() {
 
 # die: print an error message and exit
 die() {
-    printf "%s\n" "❌ $1" >&2
-    exit ${2:-1}
+    printf "❌ %s\n" "$1" >&2
+    exit "${2:-1}"
 }
 
 # render_doc: build README.md by concatenating template fragments
@@ -34,7 +34,7 @@ render_doc() {
 main() {
     check_prereqs
     render_doc
-    printf "✅ README.md updated\n"
+    printf "%s\n" "✅ README.md updated"
 }
 
 main "$@"

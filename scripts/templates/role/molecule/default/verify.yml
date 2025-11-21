@@ -1,7 +1,0 @@
-- name: Verify role
-  hosts: all
-  gather_facts: false
-  tasks:
-    - name: Confirm role applied
-      debug:
-        msg: 'Role __ROLE__ applied'

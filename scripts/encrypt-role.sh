@@ -12,8 +12,9 @@ EOF
 
 # die: print error and exit
 die() {
-    printf "%s\n" "ERROR: $1" >&2
-    exit ${2:-1}
+    printf "ERROR: %s\n" "$1" >&2
+    local rc="${2:-1}"
+    exit "$rc"
 }
 
 # ensure_vault_file: create vault password file if missing

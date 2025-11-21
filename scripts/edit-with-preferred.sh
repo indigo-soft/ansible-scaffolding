@@ -3,8 +3,8 @@ set -euo pipefail
 
 # die: print error and exit
 die() {
-    printf "%s\n" "ERROR: $1" >&2
-    exit ${2:-1}
+    printf "ERROR: %s\n" "$1" >&2
+    exit "${2:-1}"
 }
 
 # usage: show usage info
@@ -58,15 +58,15 @@ get_editor() {
     fi
     # 4) fallback to nano, then vi
     if command -v nano >/dev/null 2>&1; then
-        printf "nano"
+        printf "%s" "nano"
         return 0
     fi
     if command -v vi >/dev/null 2>&1; then
-        printf "vi"
+        printf "%s" "vi"
         return 0
     fi
     # last resort
-    printf "ed"
+    printf "%s" "ed"
 }
 
 # main: validate args and exec ansible-vault edit with chosen editor

@@ -9,8 +9,8 @@ dest_root=""
 
 # die: print an error message and exit with optional code
 die() {
-    printf "%s\n" "❌ $1" >&2
-    exit ${2:-1}
+    printf "❌ %s\n" "$1" >&2
+    exit "${2:-1}"
 }
 
 # usage: show short usage help for the script
@@ -43,8 +43,14 @@ setup_paths() {
 # copy_templates: recursively copy template files to the new role,
 # replacing the __ROLE__ placeholder
 copy_templates() {
+    # Copy templates but skip molecule tests by default; molecule tests
+    # will be created explicitly via the create command.
     find "$template_root" -type f -print0 | while IFS= read -r -d '' tpl; do
-        rel_path="${tpl#$template_root/}"
+        rel_path="${tpl#"$template_root"/}"
+        # skip any molecule templates
+        case "$rel_path" in
+            molecule/*) continue ;;
+        esac
         dest="$dest_root/$rel_path"
         mkdir -p "$(dirname "$dest")"
         sed "s|__ROLE__|${role_name}|g" "$tpl" > "$dest"
@@ -92,11 +98,16 @@ main() {
         usage
         die "Role name required"
     fi
-
     vault_file="${2:-.vault}"
 
     validate_role_name
     setup_paths
+
+    # If the destination role directory already exists, abort with a red error.
+    if [ -d "$dest_root" ]; then
+        printf "%b\n" "\033[31m[ERROR]: Role '$role_name' already exists.\033[0m" >&2
+        exit 1
+    fi
     copy_templates
     install_group_vars
 

@@ -13,7 +13,7 @@ create_dirs() {
 render_template() {
   local src="$1" dst="$2"
   if [ ! -f "$src" ]; then
-    printf "Warning: template not found: %s\n" "$src" >&2
+    printf "[WARNING]: template not found: %s\n" "$src" >&2
     return 0
   fi
   mkdir -p "$(dirname "$dst")"
@@ -48,7 +48,6 @@ create_group_vars() {
 run_optional_make() {
   if [ -f Makefile ]; then
     make --no-print-directory vault || true
-    make --no-print-directory set-python || true
   fi
 }
 
@@ -59,6 +58,13 @@ set_permissions() {
 
 # main: orchestrate init
 main() {
+  # Abort if ansible.cfg already exists to avoid overwriting an existing configuration
+  if [ -f ./ansible.cfg ]; then
+    printf "%b\n" "\033[31m[ERROR]: ansible.cfg already exists in the current directory.\033[0m" >&2
+    printf "%b\n" "\033[31mInit aborted to avoid overwriting existing configuration.\033[0m" >&2
+    exit 1
+  fi
+
   create_dirs
   create_ansible_cfg
   create_site_yml
@@ -66,7 +72,7 @@ main() {
   create_group_vars
   run_optional_make
   set_permissions
-  printf "✅ Project structure created\n"
+  printf "%s\n" "✅ Project structure created"
 }
 
 main "$@"
