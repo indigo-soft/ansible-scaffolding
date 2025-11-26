@@ -35,7 +35,7 @@ create_site_yml() {
 # create_inventory: write inventory hosts file from template
 create_inventory() {
   mkdir -p inventory
-  render_template "$(dirname "$0")/templates/init/inventory_hosts.ini" inventory/hosts.ini
+  render_template "$(dirname "$0")/templates/init/inventory_hosts.yml" inventory/hosts.yml
 }
 
 # create_group_vars: write group_vars/all.yml from template

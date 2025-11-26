@@ -1,0 +1,20 @@
+---
+all:
+  children:
+    production:
+      children:
+        web:
+            hosts:
+        db:
+            hosts:
+        vpn:
+            hosts:
+        proxy:
+            hosts:
+        dns:
+            hosts:
+        backup:
+            hosts:
+    staging:
+      hosts:
+        staging.server:
