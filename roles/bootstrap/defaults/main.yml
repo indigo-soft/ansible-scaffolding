@@ -1,0 +1,8 @@
+---
+# USER
+user_name: { { ansible_user.name } }
+user_group: { { ansible_user.group } }
+user_pubkey: { { ansible_user.pubkey } }
+
+# SSH
+ssh_port: { { ssh_port } }

@@ -1,0 +1,13 @@
+---
+# Main tasks
+- name: create new user for ansible operations
+  user:
+    name: "{{ bootstrap_user }}"
+    shell: /bin/bash
+    create_home: yes
+    groups: sudo
+
+- name: Add authorized key for bootstrap user
+  authorized_key:
+    user: "{{ bootstrap_user }}"
+    key: "{{ lookup('file', bootstrap_pubkey) }}"

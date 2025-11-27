@@ -1,8 +1,9 @@
 ---
 # USERS
 ansible_user:
-  - name: deploy
-    groups: sudo
+  name: deploy
+  groups: sudo
+  pubkey: "{{ lookup('file', 'files/keys/id_ed25519_main.pub') }}"
 
 # SYSTEM
 ntp_servers:
@@ -13,7 +14,7 @@ ntp_servers:
 dns_servers:
   - 1.1.1.1
   - 9.9.9.9
-timezone: UTC
+timezone: Europe/Kyiv
 locales:
   - en_US.UTF-8
 
@@ -52,8 +53,8 @@ base_apps:
 
 # FIREWALL
 open_ports:
-  - 2222
+  - 33222
   - 80
   - 443
   - 53
-ssh_port: 2222
+ssh_port: 33222

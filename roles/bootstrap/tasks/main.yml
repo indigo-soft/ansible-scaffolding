@@ -1,0 +1,5 @@
+---
+# Bootstrap tasks
+- import_tasks: user.yml
+- import_tasks: ssh.yml
+- import_tasks: security.yml

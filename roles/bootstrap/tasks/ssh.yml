@@ -1,0 +1,8 @@
+---
+- name: Change SSH port
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^#?Port"
+    line: "Port {{ bootstrap_port }}"
+    state: present
+  notify: Restart ssh

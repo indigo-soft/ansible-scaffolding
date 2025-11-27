@@ -51,6 +51,6 @@ test-reports/
 package-lock.json
 
 # temporary
-/roles/*
+#/roles/*
 /group_vars/*
 /host_vars/*

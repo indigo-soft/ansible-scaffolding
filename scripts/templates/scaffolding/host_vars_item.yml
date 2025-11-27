@@ -1,0 +1,9 @@
+---
+# USERS
+ansible_user:
+  name: root
+  groups: sudo
+  pubkey: "{{ lookup('file', 'files/keys/id_ed25519_main.pub') }}"
+
+# SSH
+ssh_port: 22

@@ -21,6 +21,12 @@ render_template() {
 }
 
 # create_ansible_cfg: write ansible.cfg from template
+create_pubkey() {
+  render_template "$(dirname "$0")/../templates/init/id_ed25519_main.pub" ./files/keys/id_ed25519_main.pub
+  chmod 644 ./files/keys/id_ed25519_main.pub
+}
+
+# create_ansible_cfg: write ansible.cfg from template
 create_ansible_cfg() {
   render_template "$(dirname "$0")/../templates/init/ansible.cfg" ./ansible.cfg
   chmod 644 ./ansible.cfg
@@ -66,6 +72,7 @@ main() {
   fi
 
   create_dirs
+  create_pubkey
   create_ansible_cfg
   create_site_yml
   create_inventory
