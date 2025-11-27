@@ -22,26 +22,26 @@ render_template() {
 
 # create_ansible_cfg: write ansible.cfg from template
 create_ansible_cfg() {
-  render_template "$(dirname "$0")/templates/init/ansible.cfg" ./ansible.cfg
+  render_template "$(dirname "$0")/../templates/init/ansible.cfg" ./ansible.cfg
   chmod 644 ./ansible.cfg
   export ANSIBLE_CONFIG=./ansible.cfg
 }
 
 # create_site_yml: write the top-level site playbook from template
 create_site_yml() {
-  render_template "$(dirname "$0")/templates/init/site.yml" ./site.yml
+  render_template "$(dirname "$0")/../templates/init/site.yml" ./playbooks/site.yml
 }
 
 # create_inventory: write inventory hosts file from template
 create_inventory() {
   mkdir -p inventory
-  render_template "$(dirname "$0")/templates/init/inventory_hosts.yml" inventory/hosts.yml
+  render_template "$(dirname "$0")/../templates/init/inventory_hosts.yml" inventory/hosts.yml
 }
 
 # create_group_vars: write group_vars/all.yml from template
 create_group_vars() {
   mkdir -p group_vars
-  render_template "$(dirname "$0")/templates/init/group_vars_all.yml" group_vars/all.yml
+  render_template "$(dirname "$0")/../templates/init/group_vars_all.yml" group_vars/all.yml
 }
 
 # run_optional_make: call Makefile targets if Makefile exists
@@ -70,7 +70,8 @@ main() {
   create_site_yml
   create_inventory
   create_group_vars
-  run_optional_make
+  # Encrypt only selected YAML locations
+  "$(dirname "$0")/vault-bulk-encrypt.sh" "$vault_password_file"
   set_permissions
   printf "%s\n" "✅ Project structure created"
 }

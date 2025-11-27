@@ -15,7 +15,6 @@ check_molecule() {
     }
 }
 
-# check_roles: ensure there are roles to test
 
 # check_roles: ensure there are roles to test
 check_roles() {
@@ -105,8 +104,7 @@ remove_molecule_tests() {
         # through `make` or other wrappers that may not have a TTY on stdout.
         local prompt="$1"
         local ans
-            if [ -t 0 ] || [ -t 1 ]; then
-            printf "%s" "$prompt"
+        if [ -t 0 ] || [ -t 1 ]; then
             read -r ans
         elif [ -e /dev/tty ]; then
             # read from the controlling terminal
@@ -124,13 +122,11 @@ remove_molecule_tests() {
     }
 
     if [ -n "$role_name" ]; then
-            if [ ! -d "roles/$role_name" ]; then
-            printf "%s\n" "${RED}[ERROR]: Role directory roles/$role_name does not exist.${NC}"
+        if [ ! -d "roles/$role_name" ]; then
             exit 1
         fi
         if [ -d "roles/$role_name/molecule" ]; then
-                if confirm "Remove Molecule tests for role '$role_name'? [y/N]: "; then
-                rm -rf -- "roles/$role_name/molecule"
+            if confirm "Remove Molecule tests for role '$role_name'? [y/N]: "; then
                 printf "%s\n" "${GREEN}[INFO]: Removed Molecule tests for role '$role_name'.${NC}"
             else
                 return 1
@@ -222,8 +218,7 @@ test_molecule_for_role() {
 
     check_molecule
 
-        if [ ! -f "roles/$role_name/molecule/default/molecule.yml" ] && \
-       ! [ -f "roles/$role_name/molecule/default/verify.yml" ] && \
+    if [ ! -f "roles/$role_name/molecule/default/molecule.yml" ] && \
        ! [ -d "roles/$role_name/molecule/default/tests" ]; then
         printf "%s\n" "${RED}[ERROR]: No Molecule scenario/tests found in roles/$role_name/molecule/default/.${NC}"
         exit 1
@@ -266,9 +261,9 @@ main() {
             ;;
         *)
             if [ -n "${1:-}" ]; then
-                    printf "%s\n" "${RED}[ERROR]: Unknown command '${1}'.${NC}" >&2
-                fi
+                printf "%s\n" "${RED}[ERROR]: Unknown command '${1}'.${NC}" >&2
                 echo "Usage: $0 [all|molecule|roles|tests|create|remove|list|test]" >&2
+            fi
             exit 2
             ;;
     esac

@@ -1,2 +1,59 @@
 ---
-example_variable: value
+# USERS
+ansible_user:
+  - name: deploy
+    groups: sudo
+
+# SYSTEM
+ntp_servers:
+  - 0.pool.ntp.org
+  - 1.pool.ntp.org
+  - 2.pool.ntp.org
+  - 3.pool.ntp.org
+dns_servers:
+  - 1.1.1.1
+  - 9.9.9.9
+timezone: UTC
+locales:
+  - en_US.UTF-8
+
+# PACKAGES
+base_apps:
+  - mc
+  - htop
+  - git
+  - curl
+  - nala
+  - fish
+  - netfilter-persistent
+  - iptables-persistent
+  - net-tools
+  - unzip
+  - tar
+  - gzip
+  - bzip2
+  - wget
+  - software-properties-common
+  - apt-transport-https
+  - ca-certificates
+  - dnsutils
+  - logrotate
+  - rsync
+  - rsyslog
+  - python3-pip
+  - python3-venv
+  - python3
+  - build-essential
+  - make
+  - jq
+  - tree
+  - fail2ban
+  - sudo
+
+# FIREWALL
+open_ports:
+  - 2222
+  - 80
+  - 443
+  - 53
+ssh_port: 2222

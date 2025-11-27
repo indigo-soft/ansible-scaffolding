@@ -11,6 +11,9 @@ make decrypt                 # decrypt variables
 make vault-edit              # edit encrypted variables
 make doc-md                  # generate README.md
 make role [role-name]        # scaffold new role [role-name]
+make scaffold-inventory      # scaffold group_vars and host_vars from inventory
+make fmt                     # format YAML with Prettier
+make fmt-check               # check YAML formatting (no changes)
 make molecule-test           # full Molecule test
 make molecule-verify         # verify only
 make molecule-create         # create test instance

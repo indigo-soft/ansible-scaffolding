@@ -1,0 +1,19 @@
+{
+    "name": "infra",
+    "version": "1.0.0",
+    "description": "Minimalistic Ansible project scaffold with ergonomic Makefile automation. Includes role generator, Molecule integration, Vault support, and auto-generated README. Designed for clarity, reproducibility, and contributor onboarding.",
+    "directories": {
+        "doc": "docs"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "type": "commonjs",
+    "devDependencies": {
+        "prettier": "^3.6.2",
+        "yaml-lint": "^1.7.0"
+    }
+}

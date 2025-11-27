@@ -14,10 +14,8 @@ die() {
 
 # render_doc: build README.md by concatenating template fragments
 render_doc() {
-    local script_dir template_dir
-    script_dir="$(cd "$(dirname "$0")" && pwd)"
-    template_dir="$script_dir/templates/doc-md"
-
+    local template_dir
+    template_dir="$(cd "$(dirname "$0")/.." && pwd)/templates/doc-md"
     if [ ! -d "$template_dir" ]; then
         die "Templates directory not found: $template_dir"
     fi
@@ -26,6 +24,7 @@ render_doc() {
 
     cat "$template_dir/readme_intro.md" \
     "$template_dir/commands.md" \
+    "$template_dir/prettier.md" \
     "$template_dir/wsl_note.md" \
     "$template_dir/ansible_lint.md" > ./docs/README.md
 }

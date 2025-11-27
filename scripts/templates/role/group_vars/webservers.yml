@@ -1,4 +1,0 @@
----
-myrole_enabled: true
-myrole_port: 8080
-myrole_config_path: /etc/__ROLE__/config.yml

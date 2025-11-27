@@ -1,0 +1,7 @@
+---
+- name: Bootstrap new server
+  hosts: "{{ target_host }}"
+  gather_facts: false
+  become: true
+  roles:
+    - bootstrap

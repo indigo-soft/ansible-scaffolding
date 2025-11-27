@@ -30,6 +30,12 @@ env/
 venv/
 __pycache__/
 
+# Ansible
+.ansible
+*.retry
+*.backup
+*.orig
+
 # Molecule
 *.retry
 *.log
@@ -39,3 +45,12 @@ test-reports/
 # Makefile
 *.out
 *.tmp
+
+# node.js
+/node_modules
+package-lock.json
+
+# temporary
+/roles/*
+/group_vars/*
+/host_vars/*

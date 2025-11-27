@@ -1,5 +1,29 @@
-* text=auto
+# Enforce LF line endings for text files
+* text=auto eol=lf
 
+# Explicitly enforce LF for common script/config types
+*.sh text eol=lf
+*.bash text eol=lf
+*.py text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.md text eol=lf
+*.cfg text eol=lf
+*.ini text eol=lf
+
+# Do not modify line endings for binary files
+*.png binary
+*.png -text
+*.jpg -text
+*.jpeg -text
+*.gif -text
+*.ico -text
+*.pdf -text
+*.zip -text
+*.gz -text
+*.tar -text
+*.tgz -text
+*.jar -text
 *.yml text
 *.yaml text
 *.md text
